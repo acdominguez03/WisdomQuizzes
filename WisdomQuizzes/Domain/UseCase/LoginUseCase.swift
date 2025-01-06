@@ -25,7 +25,7 @@ struct LoginUseCase: LoginUseCaseProtocol {
             return .success(result)
         } catch {
             let error = error as? ErrorResponse
-            return .failure(ErrorResponse(code: error?.code ?? 503, message: error?.message ?? "No se pudo conectar con el servidor", type: error?.type ?? "ServerError"))
+            return .failure(ErrorResponse(code: error?.code ?? 504, message: error?.message ?? "No se pudo conectar con el servidor", type: error?.type ?? "ServerError"))
         }
     }
 }

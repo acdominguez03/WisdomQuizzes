@@ -9,7 +9,7 @@ import Foundation
 
 @Observable
 @MainActor final class LoginViewModel {
-    let loginUseCase: LoginUseCaseProtocol!
+    let loginUseCase: LoginUseCaseProtocol
     
     var errorMessage: String = ""
     var username: String = ""
@@ -17,6 +17,8 @@ import Foundation
     
     var showAlert: Bool = false
     var isLoading: Bool = false
+    
+    var navigate: Bool = false
     
     init(loginUseCase: LoginUseCaseProtocol = LoginUseCase()) {
         self.loginUseCase = loginUseCase
@@ -28,8 +30,9 @@ import Foundation
         switch result {
         case .success(let loginBO):
             self.isLoading = false
-            self.errorMessage = loginBO.accessToken
-            self.showAlert = true
+            UserDefaultsManager.shared.saveTokens(accessToken: loginBO.accessToken, refreshToken: loginBO.refreshToken)
+            UserDefaultsManager.shared.username = self.username
+            navigate = true
         case .failure(let error):
             self.isLoading = false
             self.errorMessage = error.message

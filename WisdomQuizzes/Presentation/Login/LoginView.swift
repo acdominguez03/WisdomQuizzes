@@ -33,6 +33,7 @@ struct LoginView: View {
                     
                     let isDisabled = viewModel.username.isEmpty || viewModel.password.isEmpty
                     
+                    
                     CustomButton(
                         title: "Iniciar sesión",
                         isDisabled: isDisabled
@@ -65,6 +66,10 @@ struct LoginView: View {
             }.alert(viewModel.errorMessage, isPresented: $viewModel.showAlert) {
                 Button("Aceptar", role: .cancel){}
             }
+            .navigationDestination(
+                isPresented: $viewModel.navigate,
+                destination: { HomeView() }
+            )
             .navigationDestination(for: String.self) { value in
                 RegisterView()
             }
