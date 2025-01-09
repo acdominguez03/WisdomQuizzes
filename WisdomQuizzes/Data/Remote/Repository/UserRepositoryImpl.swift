@@ -23,7 +23,7 @@ extension UserRepositoryImpl: UserRepositoryProtocol {
         do {
             let result = try await remote.login(username: username, password: password)
             
-            return UserMapper.toLoginBO(input: result.data)
+            return result.data.toLoginBO
         } catch {
             throw error
         }
